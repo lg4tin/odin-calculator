@@ -69,6 +69,20 @@ function deleteButton() {
 
 document.querySelector('.delete').addEventListener('click', deleteButton);
 
+function plusMinus() {
+    if (displayValue.textContent === '' || displayValue.textContent === operator) {
+        return;
+    } else {
+        if (displayValue.textContent.includes('-')) {
+            displayValue.textContent = displayValue.textContent.slice(1);
+        } else {
+            displayValue.textContent = '-' + displayValue.textContent;
+        }
+    }
+}
+
+document.querySelector('.plus-minus').addEventListener('click', plusMinus);
+
 function operate(operator, a, b) {
     if (b === undefined) b = +displayValue.textContent;
     if (operator == '+') return add(a, b).toFixed(2);
