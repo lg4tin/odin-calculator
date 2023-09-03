@@ -9,8 +9,11 @@ let previousCalculation;
 let numberButtons = document.querySelectorAll('.buttons');
 numberButtons.forEach(button => {
     button.addEventListener('click', function() {
+        //displayValue.textContent = '';
+        if (displayValue.textContent === operator || displayValue.textContent == 0 || (operator != undefined && displayValue.textContent == previousCalculation)) {
+            displayValue.textContent = '';
+        }
         if (operator) {
-            
             displayValue.textContent += button.textContent;
         } else {
             displayValue.textContent += button.textContent;
@@ -20,29 +23,32 @@ numberButtons.forEach(button => {
 
 operators.forEach(oper => {
     oper.addEventListener('click', function() {
+        if (operator == '+' || operator == '-' || operator == '+' || operator == '/'){
+            operator = oper.textContent;
+            return;
+        }
         if (a != undefined && operator != undefined) {
+            previousCalculation = operate(operator, a, b);
             displayValue.textContent = operate(operator, a, b);
+            a = displayValue.textContent;
+            b = undefined;
+            operator = oper.textContent;
         } else {
             operator = oper.textContent;
             a = +displayValue.textContent;
-            displayValue.textContent = '';
+            displayValue.textContent = oper.textContent;
         }
-        
     });
 })
 
 equalsButton.addEventListener('click', function() {
-    if (b === undefined) b = +displayValue.textContent;
-    
     displayValue.textContent = operate(operator, a, b);
-    a = operate(operator, a, b);
     b = undefined;
-    previousCalculation = operate(operator, a, b);
-    reset();
+    operator = undefined;
 })
 
 function operate(operator, a, b) {
-    if (b === undefined) b = displayValue.textContent;
+    if (b === undefined) b = +displayValue.textContent;
     if (operator == '+') return add(a, b);
     else if (operator == '-') return subtract(a, b);
     else if (operator == '*') return multiply(a, b);
@@ -70,7 +76,7 @@ function divide(a, b) {
 document.querySelector('.clear').addEventListener('click', clear);
 
 function clear() {
-    displayValue.textContent = '';
+    displayValue.textContent = 0;
     reset();
 }
 
