@@ -42,18 +42,20 @@ operators.forEach(oper => {
 })
 
 equalsButton.addEventListener('click', function() {
+    if (!a || !operator) return;
     displayValue.textContent = operate(operator, a, b);
     b = undefined;
     operator = undefined;
+    if (displayValue.textContent === 'NaN') clear();
 })
 
 function operate(operator, a, b) {
     if (b === undefined) b = +displayValue.textContent;
-    if (operator == '+') return add(a, b);
-    else if (operator == '-') return subtract(a, b);
-    else if (operator == '*') return multiply(a, b);
+    if (operator == '+') return add(a, b).toFixed(2);
+    else if (operator == '-') return subtract(a, b).toFixed(2);
+    else if (operator == '*') return multiply(a, b).toFixed(2);
     else if (operator == '/' && b === 0) return 'LMAO';
-    else if (operator == '/') return divide(a, b);
+    else if (operator == '/') return divide(a, b).toFixed(2);
 }
 
 function add(a, b) {
