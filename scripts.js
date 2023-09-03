@@ -49,6 +49,26 @@ equalsButton.addEventListener('click', function() {
     if (displayValue.textContent === 'NaN') clear();
 })
 
+function addDecimal() {
+    if (displayValue.textContent.includes('.')) {
+        return;
+    } else {
+        displayValue.textContent += '.';
+    }
+}
+
+document.querySelector('.decimal').addEventListener('click', addDecimal);
+
+function deleteButton() {
+    if (displayValue.textContent === '' || displayValue.textContent === operator) {
+        return;
+    } else {
+        displayValue.textContent = displayValue.textContent.slice(0, -1);
+    }
+}
+
+document.querySelector('.delete').addEventListener('click', deleteButton);
+
 function operate(operator, a, b) {
     if (b === undefined) b = +displayValue.textContent;
     if (operator == '+') return add(a, b).toFixed(2);
