@@ -9,8 +9,7 @@ let previousCalculation;
 let numberButtons = document.querySelectorAll('.buttons');
 numberButtons.forEach(button => {
     button.addEventListener('click', function() {
-        //displayValue.textContent = '';
-        if (displayValue.textContent === operator || displayValue.textContent == 0 || (operator != undefined && displayValue.textContent == previousCalculation)) {
+        if (displayValue.textContent === operator || displayValue.textContent == 0 || (operator != undefined && displayValue.textContent == previousCalculation) || displayValue.textContent == 'NaN') {
             displayValue.textContent = '';
         }
         if (operator) {
@@ -23,20 +22,21 @@ numberButtons.forEach(button => {
 
 operators.forEach(oper => {
     oper.addEventListener('click', function() {
-        if (operator == '+' || operator == '-' || operator == '+' || operator == '/'){
+        if (a != undefined && operator != undefined && displayValue.textContent == operator) {
             operator = oper.textContent;
-            return;
-        }
-        if (a != undefined && operator != undefined) {
-            previousCalculation = operate(operator, a, b);
-            displayValue.textContent = operate(operator, a, b);
-            a = displayValue.textContent;
-            b = undefined;
-            operator = oper.textContent;
-        } else {
-            operator = oper.textContent;
-            a = +displayValue.textContent;
             displayValue.textContent = oper.textContent;
+        } else {
+            if (a != undefined && operator != undefined) {
+                previousCalculation = operate(operator, a, b);
+                displayValue.textContent = operate(operator, a, b);
+                a = displayValue.textContent;
+                b = undefined;
+                operator = oper.textContent;
+            } else {
+                operator = oper.textContent;
+                a = +displayValue.textContent;
+                displayValue.textContent = oper.textContent;
+            }
         }
     });
 })
